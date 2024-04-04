@@ -25,3 +25,7 @@ variable "git_repo_name" {
 variable "subnet_id" {
   default = "subnet-0ecb42a04844714dc"
 }
+
+variable "template_id" {
+  default = "html_proj"
+}

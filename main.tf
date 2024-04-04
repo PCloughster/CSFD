@@ -56,6 +56,11 @@ resource "aws_instance" "app_server" {
   ami           = data.aws_ami.amazon_linux_23.id
   instance_type = "t2.micro"
   key_name      = var.aws_key
+  user_data     = templatefile("./templates/${var.template_id}.tpl", { 
+  git_repo = var.git_repo, 
+  git_repo_name = var.git_repo_name, 
+  application_domain = var.application_domain
+  }) 
 
   tags = {
     Name = "ExampleAppServerInstance"
