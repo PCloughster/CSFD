@@ -21,3 +21,7 @@ variable "git_repo" {
 variable "git_repo_name" {
   default = "CSFD-test-repo"
 }
+
+variable "subnet_id" {
+  default = "subnet-0ecb42a04844714dc"
+}

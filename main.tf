@@ -43,6 +43,15 @@ resource "aws_security_group_rule" "vm_outbound_any" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
+resource "aws_network_interface" "main" {
+  subnet_id       = var.subnet_id
+  security_groups = [aws_security_group.vm.id]
+
+  tags = {
+    Name = "primary-interface"
+  }
+}
+
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.amazon_linux_23.id
   instance_type = "t2.micro"
