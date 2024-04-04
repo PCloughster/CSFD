@@ -63,6 +63,6 @@ resource "aws_instance" "app_server" {
   }) 
 
   tags = {
-    Name = "ExampleAppServerInstance"
+    Name = var.git_repo_name
   }
 }

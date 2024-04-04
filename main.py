@@ -1,27 +1,26 @@
 import tkinter as tk
 import json
-
-def getreponame():
-    repoLink = gitRepoInput.get()
-    repoName = repoLink[-1]
-    print(repoName)
-    return repoName
+import os
 
 def buildvm():
-    aws_key=awsKeyInput.get()
-    app_domain=applicationDomainInput.get()
-    git_repo=gitRepoInput.get()
-    subnet_id=subnetidInput.get()
-    repo_name = gitRepoInput.get().split("/")[-1]
+    repo_list = gitRepoInput.get().split("/")
+    repo_name = list(filter(None, repo_list))[-1]
 
-    dictionary = {
+    tfvars = {
         "aws_key": awsKeyInput.get(),
         "app_domain": applicationDomainInput.get(),
         "git_repo": gitRepoInput.get(),
-        "git_repo_name": gitRepoInput.get().split("/")[-1],
+        "git_repo_name": repo_name,
         "subnet_id": subnetidInput.get()
     }
+
+    tfvars_json_object = json.dumps(tfvars, indent=4)
+    with open("data.tfvars.json", "w") as outfile:
+        outfile.write(tfvars_json_object)
   
+    os.system("terraform init")
+    os.system("terraform apply -var-file=\"data.tfvars.json\" -auto-approve")
+    
     awsKeyInput.set("")
     applicationDomainInput.set("")
     gitRepoInput.set("")
