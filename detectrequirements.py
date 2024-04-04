@@ -1,0 +1,1 @@
+# TODO - Create the script which will browse through the git repository to detect framework, required packages etc

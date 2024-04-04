@@ -19,6 +19,7 @@ def buildvm():
         outfile.write(tfvars_json_object)
   
     os.system("terraform init")
+    # TODO - add validation which shows the user the plan as well as a console to the gui
     os.system("terraform apply -var-file=\"data.tfvars.json\" -auto-approve")
     
     awsKeyInput.set("")
@@ -28,15 +29,17 @@ def buildvm():
 
 def destroyvm():
     os.system("terraform destroy -auto-approve")
+    # TODO - add validation which shows the user the destroy plan before getting them to confirm
 
 root=tk.Tk()
 root.geometry("600x400")
 
-project_name=tk.StringVar()
 awsKeyInput=tk.StringVar()
 applicationDomainInput=tk.StringVar()
 gitRepoInput=tk.StringVar()
 subnetidInput=tk.StringVar()
+
+#TODO - add dropdown for supported project or an auto detect checkbox which greys this out
 
 key_label = tk.Label(root, text = 'AWS Key Pair Name*', font=('calibre',10, 'bold'))
 key_entry = tk.Entry(root,textvariable = awsKeyInput, font=('calibre',10,'normal'))
