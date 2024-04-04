@@ -1,21 +1,7 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.16"
-    }
-  }
-
-  required_version = ">= 1.2.0"
-}
-
-provider "aws" {
-  region  = "us-east-1"
-}
-
 resource "aws_instance" "app_server" {
-  ami           = "ami-830c94e3"
+  ami           = data.aws_ami.amazon_linux_23.id
   instance_type = "t2.micro"
+  key_name      = var.aws_key
 
   tags = {
     Name = "ExampleAppServerInstance"
