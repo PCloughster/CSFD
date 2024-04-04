@@ -8,7 +8,7 @@ def buildvm():
 
     tfvars = {
         "aws_key": awsKeyInput.get(),
-        "app_domain": applicationDomainInput.get(),
+        "application_domain": applicationDomainInput.get(),
         "git_repo": gitRepoInput.get(),
         "git_repo_name": repo_name,
         "subnet_id": subnetidInput.get()
@@ -38,8 +38,8 @@ applicationDomainInput=tk.StringVar()
 gitRepoInput=tk.StringVar()
 subnetidInput=tk.StringVar()
 
-key_label = tk.Label(root, text = 'AWS Key*', font=('calibre',10, 'bold'))
-key_entry = tk.Entry(root,textvariable = awsKeyInput, font=('calibre',10,'normal'), show = '*')
+key_label = tk.Label(root, text = 'AWS Key Pair Name*', font=('calibre',10, 'bold'))
+key_entry = tk.Entry(root,textvariable = awsKeyInput, font=('calibre',10,'normal'))
 
 domain_label = tk.Label(root, text = 'Application Domain*', font = ('calibre',10,'bold'))
 domain_entry =tk.Entry(root, textvariable = applicationDomainInput, font = ('calibre',10,'normal'))
