@@ -26,6 +26,9 @@ def buildvm():
     gitRepoInput.set("")
     subnetidInput.set("")
 
+def destroyvm():
+    os.system("terraform destroy -auto-approve")
+
 root=tk.Tk()
 root.geometry("600x400")
 
@@ -47,7 +50,8 @@ repo_entry = tk.Entry(root,textvariable = gitRepoInput, font=('calibre',10,'norm
 subnet_label = tk.Label(root, text = 'AWS subnet id*', font=('calibre',10, 'bold'))
 subnet_entry = tk.Entry(root,textvariable = subnetidInput, font=('calibre',10,'normal'))
 
-sub_btn=tk.Button(root,text = 'Build VM', command = buildvm)
+build_btn=tk.Button(root,text = 'Build VM', command = buildvm)
+destroy_btn=tk.Button(root,text = 'Destroy VM', command = destroyvm)
 
 key_label.grid(row=0,column=0)
 key_entry.grid(row=0,column=1)
@@ -57,7 +61,8 @@ repo_label.grid(row=1,column=0)
 repo_entry.grid(row=1,column=1)
 subnet_label.grid(row=1,column=2)
 subnet_entry.grid(row=1,column=3)
-sub_btn.grid(row=2,column=2)
+build_btn.grid(row=2,column=1)
+destroy_btn.grid(row=2,column=3)
 root.mainloop()
 
 
