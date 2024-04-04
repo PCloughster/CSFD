@@ -1,5 +1,5 @@
 resource "aws_security_group" "vm" {
-  name        = "${var.project_name}-sg"
+  name        = "${var.git_repo_name}-sg"
   description = "network rules for VM"
 }
 
