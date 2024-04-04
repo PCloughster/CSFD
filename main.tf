@@ -65,4 +65,8 @@ resource "aws_instance" "app_server" {
   tags = {
     Name = var.git_repo_name
   }
+  network_interface {
+    network_interface_id = aws_network_interface.main.id
+    device_index         = 0
+  }
 }
