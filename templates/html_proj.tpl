@@ -1,16 +1,10 @@
 #!/bin/sh
 
-#yum -y install httpd php mysql php-mysql
-
-# Install Packages
-# Will need if statement adding to only install required packages once a different script determines what's required
-
 yum install epel-release -y
 yum update
 yum install -y git
 yum install nginx -y
 systemctl enable --now nginx
-#systemctl enable --now php-fpm
 yum install -y certbot-nginx
 
 touch setupcert.sh
@@ -20,7 +14,6 @@ certbot --nginx -d ${application_domain} www.${application_domain} --agree-tos -
 " > setupcert.sh
 
 
-# Configure NGINX
 cd /etc/nginx/conf.d/
 touch ${git_repo_name}.conf
 echo "
@@ -45,22 +38,9 @@ server {
 " > ${git_repo_name}.conf
 systemctl reload nginx
 
-# setup git repository in /var/www/vhosts
 mkdir -p /var/www/vhosts/ 
 cd /var/www/vhosts/
 git init
 git clone ${git_repo}
 
 yum -y update
-
-
-
-
-
-
-
-
-
-## write a bash script that installs mysql/nginx and php-fpm
-## then it needs to configure nginx configs
-## then it needs to setup and configure openSSL
