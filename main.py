@@ -32,7 +32,7 @@ def destroyvm():
     # TODO - add validation which shows the user the destroy plan before getting them to confirm
 
 root=tk.Tk()
-root.geometry("600x400")
+root.geometry("550x100")
 
 awsKeyInput=tk.StringVar()
 applicationDomainInput=tk.StringVar()
