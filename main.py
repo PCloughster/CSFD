@@ -3,7 +3,6 @@ from tkinter import *
 import json
 import os
 import detectrequirements
-import subprocess
 
 def buildvm():
     repo_list = gitRepoInput.get().split("/")
