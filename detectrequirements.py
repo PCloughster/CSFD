@@ -10,8 +10,8 @@ def list_files_recursive(path='.', fileList=[]):
             fileList.append(full_path)
     return fileList
 
-repo_name = "CSFD-test-repo"
-git_repo = "https://github.com/PCloughster/CSFD-test-repo"
+repo_name = "react-sample"
+git_repo = "https://github.com/raminr77/react-sample"
 
 try:
     shutil.rmtree(repo_name)
@@ -30,6 +30,18 @@ for file in fileList:
     file = list(filter(None, file))[-1]
     extDict[file] = extDict.get(file,0)+1
 print(extDict)
+# if .lock file exists and required.json exists
+# check what .lock file it is (composer etc) then run the required install statement
+
+
+# if extDict only contains html, css and misc, only install an hmtl site
+# check file extensions (php, html, etc)
+# check for lock file, if a lock file present check what file that is
+# check if pip needed
+# check for composer files
+# check for lock files
+# Specify the directory path you want to start from
+
 
 os.chdir("..")
 shutil.rmtree(repo_name)

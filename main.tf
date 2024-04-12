@@ -59,7 +59,8 @@ resource "aws_instance" "app_server" {
   user_data     = templatefile("./templates/${var.template_id}.tpl", { 
   git_repo = var.git_repo, 
   git_repo_name = var.git_repo_name, 
-  application_domain = var.application_domain
+  application_domain = var.application_domain,
+  db_pass = resource.random_password.db_pass.result
   }) 
 
   tags = {

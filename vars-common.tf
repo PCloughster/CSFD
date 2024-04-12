@@ -15,11 +15,11 @@ variable "application_domain" {
 }
 
 variable "git_repo" {
-  default = "https://github.com/PCloughster/CSFD-test-repo"
+  default = "https://github.com/alexeymezenin/laravel-realworld-example-app"
 }
 
 variable "git_repo_name" {
-  default = "CSFD-test-repo"
+  default = "laravel-realworld-example-app"
 }
 
 variable "subnet_id" {
@@ -27,5 +27,11 @@ variable "subnet_id" {
 }
 
 variable "template_id" {
-  default = "html_proj"
+  default = "otherproj"
+}
+
+resource "random_password" "db_pass" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
 }

@@ -18,7 +18,7 @@ cd /etc/nginx/conf.d/
 touch ${git_repo_name}.conf
 echo "
 server {
-        listen 80 ${application_domain; #www.${application_domain};
+        listen 80 ${application_domain}; #www.${application_domain};
         listen [::]:80 ${application_domain}; #www.${application_domain};
 
         root /var/www/vhosts/${git_repo_name};
