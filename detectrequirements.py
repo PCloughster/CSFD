@@ -25,15 +25,19 @@ def detectrequirements(repo_name, git_repo):
     fileList = list_files_recursive('./')
     extDict = {}
 
-    os.chdir("..")
-    shutil.rmtree(repo_name)
+
 
     for file in fileList:
         if "artisan" in file:
-            laravel = True
+            with open(repo_name+'/artisan') as f:
+                if 'LARAVEL_START' in f.read():
+                    laravel = True
         file = file.split(".")
         file = list(filter(None, file))[-1]
         extDict[file] = extDict.get(file,0)+1
+
+    os.chdir("..")
+    shutil.rmtree(repo_name)
 
     if not laravel:
         if "php" in extDict:
