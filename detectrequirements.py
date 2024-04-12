@@ -34,7 +34,6 @@ def detectrequirements(repo_name, git_repo):
         file = file.split(".")
         file = list(filter(None, file))[-1]
         extDict[file] = extDict.get(file,0)+1
-    print(extDict)
 
     if not laravel:
         if "php" in extDict:
@@ -42,7 +41,7 @@ def detectrequirements(repo_name, git_repo):
         elif "html" in extDict:
             return "html_proj"
     else:
-        return "otherproj"
+        return "laravel_proj"
 
 
     # if .lock file exists and required.json exists
