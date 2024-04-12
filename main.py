@@ -1,26 +1,32 @@
 import tkinter as tk
 import json
 import os
+import detectrequirements
 
 def buildvm():
     repo_list = gitRepoInput.get().split("/")
     repo_name = list(filter(None, repo_list))[-1]
+    git_repo = gitRepoInput.get()
+    template_id = detectrequirements.detectrequirements(repo_name, git_repo)
 
     tfvars = {
         "aws_key": awsKeyInput.get(),
         "application_domain": applicationDomainInput.get(),
-        "git_repo": gitRepoInput.get(),
+        "git_repo": git_repo,
         "git_repo_name": repo_name,
-        "subnet_id": subnetidInput.get()
+        "subnet_id": subnetidInput.get(),
+        "template_id": template_id
     }
 
     tfvars_json_object = json.dumps(tfvars, indent=4)
     with open("data.tfvars.json", "w") as outfile:
         outfile.write(tfvars_json_object)
   
-    os.system("terraform init")
+    
+
+    os.system("/usr/local/bin/terraform init")
     # TODO - add validation which shows the user the plan as well as a console to the gui
-    os.system("terraform apply -var-file=\"data.tfvars.json\" -auto-approve")
+    os.system("/usr/local/bin/terraform apply -var-file=\"data.tfvars.json\" -auto-approve")
     
     awsKeyInput.set("")
     applicationDomainInput.set("")

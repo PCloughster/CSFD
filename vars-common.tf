@@ -15,11 +15,11 @@ variable "application_domain" {
 }
 
 variable "git_repo" {
-  default = "https://github.com/alexeymezenin/laravel-realworld-example-app"
+  default = "https://github.com/PCloughster/0161festival"
 }
 
 variable "git_repo_name" {
-  default = "laravel-realworld-example-app"
+  default = "0161festival"
 }
 
 variable "subnet_id" {

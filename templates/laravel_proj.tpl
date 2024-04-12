@@ -74,8 +74,7 @@ export COMPOSER_HOME=/var/www/vhosts/${git_repo_name}
 composer update --no-interaction
 composer install --no-interaction
 
-yum install php-pdo -y
-yum install php-mysql -y
+yum install php-pdo php-mysql -y
 
 php artisan key:generate
 
