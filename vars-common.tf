@@ -11,11 +11,11 @@ variable "application_domain" {
 }
 
 variable "git_repo" {
-  default = "https://github.com/PCloughster/0161festival"
+  default = "https://github.com/PCloughster/csfd-test-react"
 }
 
 variable "git_repo_name" {
-  default = "0161festival"
+  default = "csfd-test-react"
 }
 
 variable "subnet_id" {
@@ -23,7 +23,7 @@ variable "subnet_id" {
 }
 
 variable "template_id" {
-  default = "otherproj"
+  default = "react_proj"
 }
 
 resource "random_password" "db_pass" {
