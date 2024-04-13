@@ -21,9 +21,9 @@ def buildvm():
         "git_repo": git_repo,
         "git_repo_name": repo_name,
         "subnet_id": subnetidInput.get(),
+        "aws_region": awsZone,
         "template_id": template_id
     }
-    print("aws Zone:"+awsZone)
 
     tfvars_json_object = json.dumps(tfvars, indent=4)
     with open("data.tfvars.json", "w") as outfile:
@@ -47,7 +47,7 @@ def buildvm():
     os.system("/usr/local/bin/terraform apply -var-file=\"data.tfvars.json\" -auto-approve")
 
     tfvars = {}
-    awsZone.set("")    
+    selectedZone.set("")    
     awsKeyInput.set("")
     applicationDomainInput.set("")
     gitRepoInput.set("")

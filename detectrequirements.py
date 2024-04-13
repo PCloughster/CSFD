@@ -29,13 +29,13 @@ def detectrequirements(repo_name, git_repo):
 
 
     for file in fileList:
-        if "artisan" in file:
-            with open(repo_name+'/artisan') as f:
+        if "artisan" == file:
+            with open(file) as f:
                 if 'LARAVEL_START' in f.read():
                     laravel = True
         elif "package.json" in file:
-            with open(repo_name+'package.json') as f:
-                if '@types/react' in f.read():
+            with open(file) as f:
+                if 'react' in f.read():
                     react = True
         file = file.split(".")
         file = list(filter(None, file))[-1]
@@ -44,16 +44,14 @@ def detectrequirements(repo_name, git_repo):
     os.chdir("..")
     shutil.rmtree(repo_name)
 
-    if not laravel or not react:
-        if "php" in extDict:
-            return "php_proj"
-        elif "html" in extDict:
-            return "html_proj"
-    elif react:
+    if react:
         return "react_proj"
     elif laravel:
         return "laravel_proj"
-
+    elif "html" in extDict:
+        return "html_proj"
+    else:
+        return "php_proj"
 
     # if .lock file exists and required.json exists
     # check what .lock file it is (composer etc) then run the required install statement
