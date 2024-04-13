@@ -9,6 +9,9 @@ yum install -y certbot-nginx
 yum install -y composer
 yum install -y php-fpm
 systemctl enable --now php-fpm
+dnf install -y mariadb105
+dnf install -y mariadb105-server
+sudo systemctl enable --now mariadb
 yum install -y openssl php-bcmath php-curl php-json php-mbstring php-tokenizer php-xml php-zip
 
 touch setupcert.sh
@@ -52,11 +55,29 @@ cd /var/www/vhosts/
 git init
 git clone ${git_repo}
 
-
 cd /var/www/vhosts/${git_repo_name}
 chmod 755 -R .
 chown apache -R .
 
 sed -i "s/^listen =.*/listen = 127.0.0.1:9000/" /etc/php-fpm.d/www.conf
-systemctl restart php-fpm
+password=$(tr -dc 'A-Za-z0-9!?%=' < /dev/urandom | head -c 10)
+mysql --user=root <<_EOF_
+create user '${git_repo_name}'@'localhost' identified by '${db_pass}';
+create database '${git_repo_name}';
+grant all privileges on ${git_repo_name}.* TO '${git_repo_name}'@'localhost';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '$password';
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+FLUSH PRIVILEGES;
+_EOF_
+
+touch ~/.my.cnf
+echo "
+[mysql]
+host=localhost
+user=root
+password=$password
+"> ~/.my.cnf
+
 yum -y update
