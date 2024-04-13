@@ -12,6 +12,7 @@ def list_files_recursive(path='.', fileList=[]):
 
 def detectrequirements(repo_name, git_repo):
     laravel = False
+    react = False
     try:
         shutil.rmtree(repo_name)
         print("Directory already exists, removing") 
@@ -32,6 +33,10 @@ def detectrequirements(repo_name, git_repo):
             with open(repo_name+'/artisan') as f:
                 if 'LARAVEL_START' in f.read():
                     laravel = True
+        elif "package.json" in file:
+            with open(repo_name+'package.json') as f:
+                if '@types/react' in f.read():
+                    react = True
         file = file.split(".")
         file = list(filter(None, file))[-1]
         extDict[file] = extDict.get(file,0)+1
@@ -39,12 +44,14 @@ def detectrequirements(repo_name, git_repo):
     os.chdir("..")
     shutil.rmtree(repo_name)
 
-    if not laravel:
+    if not laravel or not react:
         if "php" in extDict:
             return "php_proj"
         elif "html" in extDict:
             return "html_proj"
-    else:
+    elif react:
+        return "react_proj"
+    elif laravel:
         return "laravel_proj"
 
 
