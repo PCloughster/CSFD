@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 import builddestroy
 
-if __name__ == "__main__":
+def generategui():
     root=tk.Tk()
     root.geometry("550x100")
 
@@ -11,6 +11,7 @@ if __name__ == "__main__":
     gitRepoInput=tk.StringVar()
     subnetidInput=tk.StringVar()
 
+    #TODO - add dropdown for supported project or an auto detect checkbox which greys this out
     AWSzones = [ 
         "default (eu-west-2)",
         "eu-west-1",
@@ -46,8 +47,8 @@ if __name__ == "__main__":
     awsRegion_label = tk.Label(root, text = 'AWS region', font=('calibre',10, 'bold'))
     awsRegion_drop = OptionMenu( root , selectedZone , *AWSzones ) 
 
-    build_btn = tk.Button(root, text='Build VM', command=lambda: builddestroy.buildvm(awsKeyInput.get(), applicationDomainInput.get(), gitRepoInput.get(), subnetidInput.get(), selectedZone.get()))
-    destroy_btn=tk.Button(root,text = 'Destroy VM', command=lambda: builddestroy.destroyvm)
+    build_btn=tk.Button(root,text = 'Build VM', command = builddestroy.buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, selectedZone))
+    destroy_btn=tk.Button(root,text = 'Destroy VM', command = builddestroy.destroyvm)
 
     key_label.grid(row=0,column=0)
     key_entry.grid(row=0,column=1)

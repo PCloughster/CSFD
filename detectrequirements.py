@@ -13,6 +13,7 @@ def list_files_recursive(path='.', fileList=[]):
 def detectrequirements(repo_name, git_repo):
     laravel = False
     react = False
+    codeigniter = False
     try:
         shutil.rmtree(repo_name)
         print("Directory already exists, removing") 
@@ -37,6 +38,10 @@ def detectrequirements(repo_name, git_repo):
             with open(file) as f:
                 if 'react' in f.read():
                     react = True
+        elif "env" in file:
+            with open(file) as f:
+                if 'CI_ENVIRONMENT' in f.read():
+                    codeigniter = True
         file = file.split(".")
         file = list(filter(None, file))[-1]
         extDict[file] = extDict.get(file,0)+1
@@ -48,6 +53,8 @@ def detectrequirements(repo_name, git_repo):
         return "react_proj"
     elif laravel:
         return "laravel_proj"
+    elif codeigniter:
+        return "ci_proj"
     elif "html" in extDict:
         return "html_proj"
     else:

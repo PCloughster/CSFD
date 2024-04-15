@@ -60,7 +60,7 @@ chown apache -R .
 npm install
 npm install -g pm2 
 npm run build
-pm2 start "npm run start" --name "csfd-test-react"
+pm2 start "npm run start" --name "${git_repo_name}"
 dnf install -y mariadb105
 dnf install -y mariadb105-server
 sudo systemctl enable --now mariadb
