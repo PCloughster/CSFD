@@ -30,11 +30,6 @@ def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, se
     os.system("/usr/local/bin/terraform apply -var-file=\"data.tfvars.json\" -auto-approve")
 
     tfvars = {}
-    selectedZone.set("")    
-    awsKeyInput.set("")
-    applicationDomainInput.set("")
-    gitRepoInput.set("")
-    subnetidInput.set("")
 
 def destroyvm():
     os.system("/usr/local/bin/terraform destroy -auto-approve")

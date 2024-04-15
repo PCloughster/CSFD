@@ -4,6 +4,7 @@ import builddestroy
 
 if __name__ == "__main__":
     root=tk.Tk()
+    root.title('CSFD')
     root.geometry("550x100")
 
     awsKeyInput=tk.StringVar()
@@ -47,7 +48,7 @@ if __name__ == "__main__":
     awsRegion_drop = OptionMenu( root , selectedZone , *AWSzones ) 
 
     build_btn = tk.Button(root, text='Build VM', command=lambda: builddestroy.buildvm(awsKeyInput.get(), applicationDomainInput.get(), gitRepoInput.get(), subnetidInput.get(), selectedZone.get()))
-    destroy_btn=tk.Button(root,text = 'Destroy VM', command=lambda: builddestroy.destroyvm)
+    destroy_btn=tk.Button(root,text = 'Destroy VM', command = builddestroy.destroyvm)
 
     key_label.grid(row=0,column=0)
     key_entry.grid(row=0,column=1)

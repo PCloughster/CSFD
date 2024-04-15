@@ -31,7 +31,7 @@ server {
         index index.php index.html index.htm index.nginx-debian.html;
 
         location / {
-                try_files $uri $uri/ /index.php$is_args$args;
+                try_files \$uri \$uri/ /index.php\$is_args\$args;
         }
 
         location ~ \.php$ {
@@ -57,7 +57,7 @@ git clone ${git_repo}
 
 cd /var/www/vhosts/${git_repo_name}
 chmod 755 -R .
-chown nginx -R .
+chown apache -R .
 
 cp env .env
 
@@ -104,9 +104,7 @@ user=root
 password=$password
 "> ~/.my.cnf
 
-sed -i "s/^listen =.*/listen = /var/run/php-fpm/php-fpm.sock/" /etc/php-fpm.d/www.conf
+sed -i "s/^listen =.*/listen = \/var\/run\/php-fpm\/php-fpm.sock/" /etc/php-fpm.d/www.conf
 systemctl restart php-fpm
-
-php artisan migrate
 
 yum -y update
