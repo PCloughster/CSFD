@@ -58,7 +58,6 @@ git clone ${git_repo}
 cd /var/www/vhosts/${git_repo_name}
 chmod 755 -R .
 chown apache -R .
-
 cp env .env
 
 if [ "${application_domain}" = "default_server" ]; then
