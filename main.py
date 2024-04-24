@@ -1,8 +1,56 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import messagebox
 import builddestroy
+import validation
 
 if __name__ == "__main__":
+    def validateInputs():
+        errors = []
+        if awsKeyInput.get().strip() == "":
+            errors.append("Required Field AWS Key left blank")
+        if validation.validateDomain(applicationDomainInput.get()) == False and applicationDomainInput.get() != "":
+            errors.append("Invalid domain provided")
+        if validation.checkGitLink(gitRepoInput.get()) == False:
+            errors.append("Invalid git repository provided")
+        if subnetidInput.get().strip() == "":
+            errors.append("Required Field Subnet ID left blank")
+        if len(errors) == 0:
+            return None
+        else:
+            return errors
+    def onBuildButton():
+        errors = validateInputs()
+        if errors != None:
+            errormessage = ""
+            for error in errors:
+                errormessage = errormessage+error+"\n"
+            displayMessage(errormessage)
+        else:
+            response = messagebox.askyesno("Confirmation", "Are you sure you wish to apply terraform with the entered variables?")
+            if response:
+                runningWin = tk.Toplevel()
+                runningWin.geometry("200x40")
+                tk.Label(runningWin, text="Terraform applying......").pack()
+                runningWin.update()
+                returnVar = builddestroy.buildvm(awsKeyInput.get(), applicationDomainInput.get(), gitRepoInput.get(), subnetidInput.get(), selectedZone.get())
+                runningWin.destroy()
+                displayMessage(returnVar)
+    def onDestroyButton():
+        response = messagebox.askyesno("Confirmation", "Are you sure you wish to apply terraform with the entered variables?")
+        if response:
+            runningWin = tk.Toplevel()
+            runningWin.geometry("200x40")
+            tk.Label(runningWin, text="Terraform destroying......").pack()
+            runningWin.update()
+            returnVar = builddestroy.destroyvm()
+            runningWin.destroy()
+        displayMessage(returnVar)
+    def displayMessage(message): 
+        tk.messagebox.showinfo("Alert!",  message) 
+
+
+
     root=tk.Tk()
     root.title('CSFD')
     root.geometry("550x100")
@@ -47,8 +95,8 @@ if __name__ == "__main__":
     awsRegion_label = tk.Label(root, text = 'AWS region', font=('calibre',10, 'bold'))
     awsRegion_drop = OptionMenu( root , selectedZone , *AWSzones ) 
 
-    build_btn = tk.Button(root, text='Build VM', command=lambda: builddestroy.buildvm(awsKeyInput.get(), applicationDomainInput.get(), gitRepoInput.get(), subnetidInput.get(), selectedZone.get()))
-    destroy_btn=tk.Button(root,text = 'Destroy VM', command = builddestroy.destroyvm)
+    build_btn = tk.Button(root, text='Build VM', command = onBuildButton)
+    destroy_btn=tk.Button(root,text = 'Destroy VM', command = onDestroyButton)
 
     key_label.grid(row=0,column=0)
     key_entry.grid(row=0,column=1)

@@ -22,8 +22,17 @@ def detectrequirements(repo_name, git_repo):
 
     os.mkdir(repo_name)
     os.chdir(repo_name)
-    os.system("git init")
-    os.system("git clone "+git_repo)
+    status = os.system("git init")
+    if status == 0:
+        status = os.system("git clone "+git_repo)
+        if status != 0:
+            os.chdir("..")
+            shutil.rmtree(repo_name)
+            return "ERROR: git repo, "+git_repo+" inaccessible"
+    else:
+        os.chdir("..")
+        shutil.rmtree(repo_name)
+        return "ERROR: git not present on system"
     fileList = list_files_recursive('./')
     extDict = {}
 
