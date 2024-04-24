@@ -30,7 +30,7 @@ resource "aws_security_group_rule" "inbound_ssh_to_vm" {
   from_port         = "22"
   to_port           = "22"
   protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = ["${var.user_ip}/32"]
 }
 
 resource "aws_security_group_rule" "vm_outbound_any" {

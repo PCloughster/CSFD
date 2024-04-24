@@ -4,6 +4,7 @@ import os
 import detectrequirements
 import subprocess
 import datetime
+import getIP
 
 def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, selectedZone):
     repo_list = gitRepoInput.split("/")
@@ -15,7 +16,13 @@ def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, se
     
     if selectedZone == "default (eu-west-2)":
         selectedZone = "eu-west-2"
+    localIP = getIP.getExternalIP()
     
+    warning = ""
+
+    if not localIP:
+        warning = "WARNING: Unable to whitelist local IP, please follow manual guide."
+
     tfvars = {
         "aws_key": awsKeyInput,
         "application_domain": applicationDomainInput,
@@ -23,7 +30,8 @@ def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, se
         "git_repo_name": repo_name,
         "subnet_id": subnetidInput,
         "aws_region": selectedZone,
-        "template_id": template_id
+        "template_id": template_id,
+        "user_ip": localIP
     }
 
     tfvars_json_object = json.dumps(tfvars, indent=4)
@@ -52,9 +60,9 @@ def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, se
 
         #status = os.system("/usr/local/bin/terraform apply -var-file=\"data.tfvars.json\" -auto-approve")
         if status != 0:
-            return ("ERROR: terraform failed apply changes, please see logs in:"+logname)
+            return ("ERROR: terraform failed apply changes, please see log file:\n:"+logName)
         else:
-            return ("SUCCESS:"+successmessage+"\n further information available in log file:\n "+logname)
+            return ("SUCCESS:"+successmessage+"\n further information available in log file:\n "+logName + warning)
     else:
         return ("ERROR: terraform failed to initiate, please ensure terraform is installed correctly")
     
@@ -79,6 +87,6 @@ def destroyvm():
     status = process.wait()
     #status = os.system("/usr/local/bin/terraform destroy -auto-approve")
     if status == 0:
-        return ("SUCCESS: terrafrom destroy successful, further information available in log file")
+        return ("SUCCESS: terrafrom destroy successful, further information available in log file:\n" +logName)
     else:
-        return ("ERROR: terraform destroy unsuccessful, please see log file")
+        return ("ERROR: terraform destroy unsuccessful, please see log file:\n" +logName)

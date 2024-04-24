@@ -1,7 +1,8 @@
 .terraform.lock.hcl
-.terraform/*
+.terraform*
 .DS_Store
 data.tfvars.json
 terraform.tfstate*
 destroyLogs/
 applyLogs/
+__pycache__/

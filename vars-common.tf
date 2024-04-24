@@ -26,6 +26,10 @@ variable "template_id" {
   default = "react_proj"
 }
 
+variable "user_ip" {
+  default = "0.0.0.0"
+}
+
 resource "random_password" "db_pass" {
   length           = 16
   special          = true
