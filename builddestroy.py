@@ -22,6 +22,9 @@ def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, se
 
     if not localIP:
         warning = "WARNING: Unable to whitelist local IP, please follow manual guide."
+    
+    if applicationDomainInput == "":
+        applicationDomainInput = "default_server"
 
     tfvars = {
         "aws_key": awsKeyInput,
