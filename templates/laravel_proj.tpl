@@ -80,9 +80,9 @@ php artisan key:generate
 
 password=$(tr -dc 'A-Za-z0-9!?%=' < /dev/urandom | head -c 10)
 mysql --user=root <<_EOF_
-create user '${git_repo_name}'@'localhost' identified by '${db_pass}';
-create database '${git_repo_name}';
-grant all privileges on ${git_repo_name}.* TO '${git_repo_name}'@'localhost';
+CREATE USER \`${git_repo_name}\`@'localhost' IDENTIFIED BY '${db_pass}';
+CREATE DATABASE \`${git_repo_name}\`;
+GRANT ALL PRIVILEGES ON \`${git_repo_name}\`.* TO \`${git_repo_name}\`@'localhost';
 ALTER USER 'root'@'localhost' IDENTIFIED BY '$password';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
 DROP DATABASE IF EXISTS test;

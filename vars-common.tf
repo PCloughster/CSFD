@@ -11,19 +11,19 @@ variable "application_domain" {
 }
 
 variable "git_repo" {
-  default = "https://github.com/PCloughster/csfd-test-react"
+  default = ""
 }
 
 variable "git_repo_name" {
-  default = "csfd-test-react"
+  default = ""
 }
 
 variable "subnet_id" {
-  default = "subnet-0ecb42a04844714dc"
+  default = ""
 }
 
 variable "template_id" {
-  default = "react_proj"
+  default = ""
 }
 
 variable "user_ip" {

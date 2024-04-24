@@ -39,7 +39,8 @@ def detectrequirements(repo_name, git_repo):
 
 
     for file in fileList:
-        if "artisan" == file:
+        if "artisan" in file:
+            print("artisan found!!!!!!!!!!!!!!!!!!!!!!!!")
             with open(file) as f:
                 if 'LARAVEL_START' in f.read():
                     laravel = True
@@ -64,10 +65,10 @@ def detectrequirements(repo_name, git_repo):
         return "laravel_proj"
     elif codeigniter:
         return "ci_proj"
-    elif "html" in extDict:
-        return "html_proj"
-    else:
+    elif "php" in extDict:
         return "php_proj"
+    else:
+        return "html_proj"
 
     # if .lock file exists and required.json exists
     # check what .lock file it is (composer etc) then run the required install statement
