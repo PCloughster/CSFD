@@ -45,6 +45,8 @@ def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, se
                 universal_newlines=True  
             )
             for line in process.stdout:
+                if "Apply complete!" in line:
+                    successmessage = line
                 output_file.write(line)
         status = process.wait()
 
@@ -52,7 +54,7 @@ def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, se
         if status != 0:
             return ("ERROR: terraform failed apply changes, please see logs in:"+logname)
         else:
-            return ("SUCCESS: terraform successfully applied, further information available in log file")
+            return ("SUCCESS:"+successmessage+"\n further information available in log file:\n "+logname)
     else:
         return ("ERROR: terraform failed to initiate, please ensure terraform is installed correctly")
     

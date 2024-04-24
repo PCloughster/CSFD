@@ -35,9 +35,11 @@ if __name__ == "__main__":
                 runningWin.update()
                 returnVar = builddestroy.buildvm(awsKeyInput.get(), applicationDomainInput.get(), gitRepoInput.get(), subnetidInput.get(), selectedZone.get())
                 runningWin.destroy()
+                if "ERROR" in returnVar:
+                    builddestroy.destroyvm()
                 displayMessage(returnVar)
     def onDestroyButton():
-        response = messagebox.askyesno("Confirmation", "Are you sure you wish to apply terraform with the entered variables?")
+        response = messagebox.askyesno("Confirmation", "Are you sure you wish to destroy all created terraform resources?")
         if response:
             runningWin = tk.Toplevel()
             runningWin.geometry("200x40")
