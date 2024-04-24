@@ -52,13 +52,31 @@ https://www.activestate.com/resources/quick-reads/how-to-pip-install-requests-py
 Once these prerequsities have been completed you can move onto project installation below.
 
 ## Installation
-Clone the files from this repository to a
+Clone the files from this repository to your perfered directory. Or download directly from git if you don't want to clone.
 
 ## Usage
 
-Once the project has been downloaded and all prerequisites 
+Once the project has been downloaded and all prerequisites setup run main.py this will present you with a GUI for creating virtual machines based on your repositories and a button to destroy anything terraform creates. 
+
+Below is a list of important directories:
+
+NGINX configuration:
+```
+/etc/nginx/conf.d/your-repo-name.conf
+```
+Your application location:
+```
+/var/www/vhosts/your-repo-name
+```
+Php-fpm is used for the handling of php requests and will install as the latest version of php. The latest MySQL will also be installed and configured for use. 
 
 ## Maintaining the virtual machine after deployment
+Once your virtual machine has been created your DNS will need to be updated to point to the IP address of the VM. 
+You will also need to setup any data into the created databases but nginx, php, and MySQL will all have been setup for you with your MySQL root credentials visible in '.my.cnf' and your application credentials in your .env variable. 
+
+You may also have noticed a script called setupcert.sh in your root directory, once your dns has been moved, run this script to setup an auto renewing SSL certificate. 
+
+If you wish to add aditional projects of the same type the Nginx config can be used as a template with directories and domain name needing to be updated.
 
 ## License
 
