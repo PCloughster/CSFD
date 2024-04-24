@@ -2,6 +2,8 @@ from tkinter import *
 import json
 import os
 import detectrequirements
+import subprocess
+import datetime
 
 def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, selectedZone):
     repo_list = gitRepoInput.split("/")
@@ -30,18 +32,50 @@ def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, se
 
     status = os.system("/usr/local/bin/terraform init")
     if status == 0:
-        status = os.system("/usr/local/bin/terraform apply -var-file=\"data.tfvars.json\" -auto-approve")
+        currentDatetime = datetime.datetime.now()
+        formattedDatetime = currentDatetime.strftime("%Y-%m-%d_%H-%M-%S")
+        if not os.path.exists("applyLogs"):
+            os.makedirs("applyLogs")
+        logName =  f"applyLogs/apply_log_{formattedDatetime}.txt"
+        with open(logName, "w") as output_file:
+            process = subprocess.Popen(
+                ["/usr/local/bin/terraform", "apply", "-var-file=data.tfvars.json", "-auto-approve"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT, 
+                universal_newlines=True  
+            )
+            for line in process.stdout:
+                output_file.write(line)
+        status = process.wait()
+
+        #status = os.system("/usr/local/bin/terraform apply -var-file=\"data.tfvars.json\" -auto-approve")
         if status != 0:
-            return ("ERROR: terraform failed apply changes, please see log file")
+            return ("ERROR: terraform failed apply changes, please see logs in:"+logname)
         else:
             return ("SUCCESS: terraform successfully applied, further information available in log file")
     else:
-        return ("ERROR: terraform failed to initiate, please see log file")
+        return ("ERROR: terraform failed to initiate, please ensure terraform is installed correctly")
     
     tfvars = {}
 
 def destroyvm():
-    status = os.system("/usr/local/bin/terraform destroy -auto-approve")
+    currentDatetime = datetime.datetime.now()
+    formattedDatetime = currentDatetime.strftime("%Y-%m-%d_%H-%M-%S")
+    if not os.path.exists("destroyLogs"):
+            os.makedirs("destroyLogs")
+    logName =  f"destroyLogs/destroyLog_log_{formattedDatetime}.txt"
+    
+    with open(logName, "w") as output_file:
+        process = subprocess.Popen(
+            ["/usr/local/bin/terraform", "destroy", "-auto-approve"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT, 
+            universal_newlines=True  
+        )
+        for line in process.stdout:
+            output_file.write(line)
+    status = process.wait()
+    #status = os.system("/usr/local/bin/terraform destroy -auto-approve")
     if status == 0:
         return ("SUCCESS: terrafrom destroy successful, further information available in log file")
     else:

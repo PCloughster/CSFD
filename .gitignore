@@ -3,3 +3,5 @@
 .DS_Store
 data.tfvars.json
 terraform.tfstate*
+destroyLogs/
+applyLogs/
