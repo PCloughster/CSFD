@@ -38,7 +38,22 @@ Now, set your secret key.
 ```
 # export AWS_SECRET_ACCESS_KEY=
 ```
-Python 3 is also required along with the pip extension requests.
+For the next steps it is important to consider which region you'll be hosting your application in as these steps will need to be completed in the region you intend to use, see AWS region documentation below:
+```
+https://aws.amazon.com/about-aws/global-infrastructure/regions_az/
+```
+Within AWS you will also need to create a key pair (make sure to save this as you'll need this to SSH to your virtual machine at the end), this can be done with the following guide:
+```
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html
+```
+Following on from this before creating anything else you will need to have a subnet which can be created with the following guide, make sure to take note of the ID:
+```
+https://docs.aws.amazon.com/vpc/latest/userguide/create-subnets.html
+```
+If you already have a subnet, you can find its ID by going to subnets and choosing the ID of your prefered subnet from that screen.
+
+
+Python 3 is also required to be installed locally along with the pip extension requests.
 
 Python:
 ```
