@@ -7,6 +7,7 @@ import datetime
 import getIP
 
 def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, selectedZone):
+    warning = ""
     repo_list = gitRepoInput.split("/")
     repo_name = list(filter(None, repo_list))[-1]
     git_repo = gitRepoInput
@@ -14,11 +15,7 @@ def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, se
     if 'ERROR' in template_id:
         return template_id
     
-    if selectedZone == "default (eu-west-2)":
-        selectedZone = "eu-west-2"
     localIP = getIP.getExternalIP()
-    
-    warning = ""
 
     if not localIP:
         warning = "WARNING: Unable to whitelist local IP, please follow manual guide."
@@ -87,7 +84,7 @@ def destroyvm():
         for line in process.stdout:
             output_file.write(line)
     status = process.wait()
-    
+
     if status == 0:
         return ("SUCCESS: terrafrom destroy successful, further information available in log file:\n" +logName)
     else:

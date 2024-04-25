@@ -16,6 +16,8 @@ if __name__ == "__main__":
             errors.append("Invalid git repository provided")
         if subnetidInput.get().strip() == "":
             errors.append("Required Field Subnet ID left blank")
+        if selectedZone.get() == "Please Select":
+            errors.append("AWS Region not selected")
         if len(errors) == 0:
             return None
         else:
@@ -67,7 +69,7 @@ if __name__ == "__main__":
     subnetidInput=tk.StringVar()
 
     AWSzones = [ 
-        "default (eu-west-2)",
+        "",
         "eu-west-1",
         "eu-west-2",
         "eu-south-1", 
@@ -84,7 +86,7 @@ if __name__ == "__main__":
     ]
 
     selectedZone = StringVar()
-    selectedZone.set("default (eu-west-2)") 
+    selectedZone.set("Please Select") 
 
     key_label = tk.Label(root, text = 'AWS Key Pair Name*', font=('calibre',10, 'bold'))
     key_entry = tk.Entry(root,textvariable = awsKeyInput, font=('calibre',10,'normal'))
@@ -98,7 +100,7 @@ if __name__ == "__main__":
     subnet_label = tk.Label(root, text = 'AWS subnet id*', font=('calibre',10, 'bold'))
     subnet_entry = tk.Entry(root,textvariable = subnetidInput, font=('calibre',10,'normal'))
 
-    awsRegion_label = tk.Label(root, text = 'AWS region', font=('calibre',10, 'bold'))
+    awsRegion_label = tk.Label(root, text = 'AWS region*', font=('calibre',10, 'bold'))
     awsRegion_drop = OptionMenu( root , selectedZone , *AWSzones ) 
 
     build_btn = tk.Button(root, text='Build VM', command = onBuildButton)
