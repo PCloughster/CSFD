@@ -66,7 +66,6 @@ else
     sed -i "s/^.*app.baseURL =.*/app.baseURL = http:\/\/${application_domain}\//" .env
 fi
 
-
 sed -i "s/^# CI_ENVIRONMENT =.*/CI_ENVIRONMENT = production/" .env
 sed -i "s/^.*database.default.hostname =.*/database.default.hostname = localhost/" .env
 sed -i "s/^.*database.default.port =.*/database.default.port = 3306/" .env
