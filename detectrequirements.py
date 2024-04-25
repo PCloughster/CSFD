@@ -40,7 +40,6 @@ def detectrequirements(repo_name, git_repo):
 
     for file in fileList:
         if "artisan" in file:
-            print("artisan found!!!!!!!!!!!!!!!!!!!!!!!!")
             with open(file) as f:
                 if 'LARAVEL_START' in f.read():
                     laravel = True
@@ -69,17 +68,3 @@ def detectrequirements(repo_name, git_repo):
         return "php_proj"
     else:
         return "html_proj"
-
-    # if .lock file exists and required.json exists
-    # check what .lock file it is (composer etc) then run the required install statement
-
-
-    # if extDict only contains html, css and misc, only install an hmtl site
-    # check file extensions (php, html, etc)
-    # check for lock file, if a lock file present check what file that is
-    # check if pip needed
-    # check for composer files
-    # check for lock files
-    # Specify the directory path you want to start from
-
-

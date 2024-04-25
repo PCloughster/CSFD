@@ -61,7 +61,6 @@ def buildvm(awsKeyInput, applicationDomainInput, gitRepoInput, subnetidInput, se
                 output_file.write(line)
         status = process.wait()
 
-        #status = os.system("/usr/local/bin/terraform apply -var-file=\"data.tfvars.json\" -auto-approve")
         if status != 0:
             return ("ERROR: terraform failed apply changes, please see log file:\n:"+logName)
         else:
@@ -80,7 +79,7 @@ def destroyvm():
     
     with open(logName, "w") as output_file:
         process = subprocess.Popen(
-            ["/usr/local/bin/terraform", "destroy", "-auto-approve"],
+            ["/usr/local/bin/terraform", "destroy","-var-file=data.tfvars.json", "-auto-approve"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT, 
             universal_newlines=True  
@@ -88,7 +87,7 @@ def destroyvm():
         for line in process.stdout:
             output_file.write(line)
     status = process.wait()
-    #status = os.system("/usr/local/bin/terraform destroy -auto-approve")
+    
     if status == 0:
         return ("SUCCESS: terrafrom destroy successful, further information available in log file:\n" +logName)
     else:
